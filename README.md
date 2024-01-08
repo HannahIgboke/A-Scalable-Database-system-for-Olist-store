@@ -45,8 +45,9 @@ I conducted a comprehensive analysis of the company's background, posed insightf
   - [Data normalization]()
   - [Table constraints]()
 - [Creating views]()
-- [Automating database activity]
-  - [Triggers and stored procedures]()
+- [Automating/Monitoring database activity]
+  - [Triggers]()
+  - [Stored procedures]()
 - [Assign user roles and Privileges]()
 - [Query optimization and scalability strategies]()
 - [Backup and recovery]()
@@ -293,11 +294,174 @@ GROUP BY o.order_id;
 
 The full sql scripts can be found here.
 
-# Automating database activity
+# Automating/Monitoring database activity
 ## Triggers
+To monitor Olist store database activities I created two triggers:
+- One, to log and audit database activities
+
+```sql
+-- First, I created an audit_log table to keep tabs on all that goes on in the database tables
+
+CREATE TABLE audit_log (
+	log_id INT AUTO_INCREMENT PRIMARY KEY,
+    table_name VARCHAR(255), -- stores the name of the table on which the operation was performed
+    action VARCHAR(10), -- Represents the kind of action done on the table - INSERT, UPDATE or DELETE
+    affected_row_id INT,-- stores the ID of the affected row
+    user VARCHAR(70), -- stores the user who made the change
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- records the timestamp of when the operation occurred
+ );   
+
+-- For the ORDERS TABLE
+
+-- Audit trigger for insert
+DELIMITER //
+CREATE TRIGGER after_orders_insert
+AFTER INSERT ON orders
+FOR EACH ROW
+BEGIN
+	INSERT INTO audit_log (table_name, action, affected_row_id, user, timestamp)
+    VALUES('orders', 'INSERT', NEW.order_id, USER(), NOW());
+END //
+DELIMITER ;
+
+```
+
+- Another to notify Olist store to when they gain a new matter
+
+
+```sql
+-- Creating the notifications table
+
+CREATE TABLE notifications (
+	notification_id INT AUTO_INCREMENT PRIMARY KEY,
+    message VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- creating the trigger on the customers table
+
+DELIMITER //
+CREATE TRIGGER notify_new_customer
+AFTER INSERT ON customers
+FOR EACH ROW
+BEGIN
+	DECLARE message VARCHAR(255); -- This declares a variable named message to store the notification message
+    SET message = CONCAT('New customer: ', NEW.customer_id, ' !');
+    INSERT INTO notifications(message)
+    VALUES (message);
+END //
+DELIMITER ;
+
+-- To check if the trigger was created
+SHOW TRIGGERS;
+
+-- To test the trigger
+INSERT INTO customers (customer_id, customer_unique_id, customer_zip_code_prefix)
+VALUES ('4aw2a9397am4bc099783511faa1p6830', '090f6d7f674977d08a9b445l5117cqd8', 2394);
+-- It worked!
+```
 
 
 ## Stored procedures
+Stored procedures are precompiled sets of SQL statements stored within the database itself. They are used for repetitive tasks making them reusable across applications. This saves time and effort, promoting code consistency and maintainability.
+
+I created a GetCustomerOrderHistory procedure that allows Olist stores gain an idea into the order history of specific customers. This is especially useful since sales managers frequently view customers order/purchase history. To do this I created a parameterized stored procedure. This can be seen below.
+
+```sql
+DROP PROCEDURE GetCustomerOrderHistory
+
+DELIMITER //
+CREATE PROCEDURE GetCustomerOrderHistory (IN cust_id VARCHAR(50)) -- where cust_id is the name of the parameter created
+BEGIN
+    SELECT o.order_id,
+			oi.product_id,
+            oi.order_item_id,
+            o.order_purchase_timestamp,
+            o.order_status,
+            oi.price,
+            oi.freight_value
+     FROM order_items AS oi
+     INNER JOIN orders AS o
+     ON oi.order_id = o.order_id
+     WHERE o.customer_id = cust_id;
+END //
+DELIMITER ;		
+
+
+-- To confirm that it worked
+CALL GetCustomerOrderHistory('8bb3bef4e75a95524235cdc11a7331af');
+
+```
+
+# Assign user roles and Privileges
+I created three users for the olist store database. A Database administrator, a sales manager and the analystics team. Each user is assigned certain privileges that allows measured access to the database.
+
+```sql
+-- Creating user roles and privileges
+
+-- For admin
+CREATE USER IF NOT EXISTS "olist_stores_admin"@localhost 
+/* Creates the new named "olist_stores_admin" and specifies the host from which the user can connect which in this case, 
+the user can connect only from "localhost"
+*/
+IDENTIFIED BY "OS_admin"; -- identified by the password
+GRANT ALL PRIVILEGES ON olist_stores.* TO "olist_stores_admin"@localhost;
+
+-- For sales manager
+CREATE USER IF NOT EXISTS "sales_manager"@localhost
+IDENTIFIED BY "OS_sales_manager";
+GRANT SELECT, INSERT, UPDATE, DELETE ON olist_stores.* TO "sales_manager"@localhost;
+GRANT EXECUTE ON PROCEDURE GetCustomerOrderHistory TO "sales_manager"@localhost;
+
+-- For analytics team
+CREATE USER IF NOT EXISTS "analytics_team"@localhost
+IDENTIFIED BY "OS_analyst";
+GRANT SELECT ON olist_stores.* TO "analytics_team"@localhost;
+
+-- To be sure the privileges are accurately given
+SHOW GRANTS FOR "olist_stores_admin"@localhost;
+SHOW GRANTS FOR "sales_manager"@localhost;
+SHOW GRANTS FOR "analytics_team"@localhost;
+
+```
+The admin is granted all privileges which means they have full control over every aspect of that database - data manipulation, definition, control, as well as administrative privileges.
+The sales manager privileges includes SELECT, and data manipulation access to the database. Also, they are provided access to the stored procedure created earlier in order to qucikly view customer order history for sales purposes.
+The data analytics team is granted SELECT privilege to retrieve data from tables.
+
+# Query optimization and scalability strategies
+
+Indexes are used to optimize the query of the olist_stores database. The indexes created are as a result of an understanding of the database structure of olist stores, that is, the indexes are created on columns of tables in a DB that are commonly used to perform JOIN and WHERE operations. The choice of columns to index is flexible and can evolve over time based on the usage patterns of the database with time.
+
+Naturally indexes are created on columns when you define primary and secondary keys.
+
+```sql
+-- To view all the present indexes in the database
+SELECT DISTINCT TABLE_NAME,
+ INDEX_NAME
+FROM INFORMATION_SCHEMA.STATISTICS
+WHERE TABLE_SCHEMA = 'olist_stores';
+
+-- Other indexes created include
+CREATE INDEX review_score_idx ON order_reviews(review_score);
+CREATE INDEX order_status_idx ON orders (order_status);
+CREATE INDEX order_purchase_timestamp_idk ON orders(order_purchase_timestamp);
+
+-- To confirm if it worked
+SELECT DISTINCT TABLE_NAME,
+ INDEX_NAME
+FROM INFORMATION_SCHEMA.STATISTICS
+WHERE TABLE_SCHEMA = 'olist_stores';
+```
+
+
+
+# Backup and recovery
+
+
+# Database security
+
+
+# Database documentation and dictionary
 
 
 
