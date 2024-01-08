@@ -86,11 +86,92 @@ Data migration can be achieved in two different ways:
 - Using the Table Import wizard on MySQL Workbench to import the data
 - Using LOAD DATA INFILE on MySQL Shell to load the data into a table
 
-# Table constraints
+I used the second method as it is efficient to load large data(in excel/csv files) into databases in record time. I also used the data import wizard to import one of the files in json format. The script below contains the SQL scripts used to import the customers information into a table in the olist stores database. The full scripts can be found in my SQL file.
+
+```sql
+-- Specifies and activates the required database
+USE olist_stores;
+------------------------------------------
+
+-- Drops table if it exists
+DROP TABLE IF EXISTS customers;
+
+-- To create the table for the customers data
+CREATE TABLE customers (
+	customer_id	VARCHAR(50) PRIMARY KEY NOT NULL,
+    customer_unique_id VARCHAR(50) NOT NULL,
+    customer_zip_code_prefix INT NOT NULL
+);
+
+-- To insert data into the newly created table
+LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\olist_customers_dataset.csv'
+INTO TABLE customers
+FIELDS TERMINATED BY ',' 
+-- For a csv file - it defines the field seperator in a csv file
+ENCLOSED BY '"' -- For the strings
+LINES TERMINATED BY '\n' -- This defines the line terminator in the csv file. It indicates that each record is terminated by a newline character('\n')
+IGNORE 1 ROWS; -- instructs mysql to ignore the first row of the csv file since the first row contain headers, and these headers are not needed since they have been created above
+
+```
+
+## Data normalization and Table alteration
+
+After importing the tables into the database, I observed that some table data were denormalized. Data normalization is used to eliminate redundant data, minimise data modification errors, and simplify the query process. I followed the three step normalization method to go through the database plan and address whatsoever may cause data integrity issues. They are as follows:
+
+- First Normal form (1NF): this deals with data atomicity, i.e ensuring that each field contains one type of information. All tables imported passed this check.
+- Second Normal Form (2NF): handles partial dependency where one column only depends on part of the primary key (commonly present in tables with composite/compound keys). The tables scaled through this step.
+- Third Normal form: this tackles transitive dependency where a column depends on a column which depends on the primary key. 
+
+I also observed that the tables below contained redundant data that could cause data modification errors:
+- order_payments
+
+<p align="center">
+    <img width="800" src="https://github.com/HannahIgboke/A-Scalable-Database-system-for-Olist-store/blob/main/Building%20a%20scalable%20Database%20system%20for%20Olist%20store/Images/order_payments.PNG" alt="order_payments">
+</p>
+
+The payments_type column contains values that upon any sort of modification - deletion or update would cause errors. To rectify this, I used the SQL script below to create a table: payment_type containing information solely about the types of payment available on the olist store platform
+
+```sql
+
+/*Data normalization to reduce redenudancy
+The SQL technique I used to normalize my data is the CTAS (CREATE TABLE AS SELECT) method to create a table 
+where each payment type would have its own id for easy reference and data update*/
+
+DROP TABLE IF EXISTS payment_kind;
+
+CREATE TABLE payment_kind (
+		payment_kind_id INT AUTO_INCREMENT PRIMARY KEY,
+        types VARCHAR(20) NOT NULL
+);
+
+INSERT INTO payment_kind (types)
+SELECT DISTINCT payment_type
+FROM order_payments;
+
+-- To check if it was successful
+SELECT *
+FROM payment_kind;
+
+-- To rename the table
+RENAME TABLE payment_kind TO payment_type;
+
+```
+
+order_payments                                                                                                   |payment_type                     
+-----------------------------------------------------------------------------------------------------------------|---------------------------
+![order_payments](Building%20a%20scalable%20Database%20system%20for%20Olist%20store/Images/order_payments2.PNG)  |![payment_type](Building%20a%20scalable%20Database%20system%20for%20Olist%20store/Images/payment_type.PNG)    
 
 
-I used the second method as it is efficient to load large data(in excel/csv files) into databases in record time. I also used the data import wizard to import one of the files in json format.
 
+## Table constraints
+
+Table constraints are used to enforce data integrity in a database. This means having correct data as a result of certain database rules. For the olist store database it meant ensuring there are no broken relationships between the tables in the Database, incorrect values and presence of duplicates. Data integrity is divided into:
+
+-	Entity integrity: to ensure unique entries – table keys
+-	Referential integrity: to ensure connection between the tables in the database – FK constraints
+-	Domain integrity: to enforce a set of rules i.e acceptable values or range of what we’re storing in a database – data type rules
+
+At this point, I also drew a sketch of what the final database is supposed to look like to view the relationship between tables
 
 
 
