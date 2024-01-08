@@ -40,7 +40,10 @@ Olist stores have the following data in excel files:
 I conducted a comprehensive analysis of the company's background, posed insightful questions about its processes and methods, and carefully reviewed the project aims and objectives. From the information gathered, I have delineated the project into the following stages to guarantee the achievement of all project objectives:
 
 - [Database setup and creation]()
-- [Data migration, table constraints and creating EER diagram]()
+- [Data migration]()
+- [Table alterations]()
+  - [Data normalization]()
+  - [Table constraints]()
 - [Creating views]()
 - [Automating database activity – triggers and stored procedures]()
 - [Assign user roles and Privileges]()
@@ -74,11 +77,9 @@ SHOW DATABASES;
 USE olist_stores;
 ```
 
-# Data migration, table constraints and creating EER diagram
+# Data migration
 
-## Data migration
-
-At this stage, the database to hold the business data has been created and the next step is to migrate data from the excel files provided into the database schema. While migrating the data I kept the following in mind:
+At this stage, the database to hold the business data has been created and the next step is to create the tables that would hold the data. Next step is to migrate data from the excel files provided into the database schema. While migrating the data I kept the following in mind:
 -	What tables are present and how do they connect to each other?
 -	What primary keys, foreign keys, constraints, data validation and integrity can be enforced.
 
@@ -114,7 +115,9 @@ IGNORE 1 ROWS; -- instructs mysql to ignore the first row of the csv file since 
 
 ```
 
-## Data normalization and Table alteration
+# Table alterations
+
+## Data normalization
 
 After importing the tables into the database, I observed that some table data were denormalized. Data normalization is used to eliminate redundant data, minimise data modification errors, and simplify the query process. I followed the three step normalization method to go through the database plan and address whatsoever may cause data integrity issues. They are as follows:
 
@@ -183,7 +186,8 @@ products                                                                        
 
 Table constraints are used to enforce data integrity in a database. This means having correct data as a result of certain database rules. For the olist store database it meant ensuring there are no broken relationships between the tables in the Database, incorrect values and presence of duplicates. Data integrity is divided into:
 
-- Entity integrity: to ensure unique entries – table keys
+- Entity integrity: to ensure unique entries – table keys.
+- 
 Some tables in the database contained natural primary keys while others don't. I had to create primary keys for the tables devoid of primary keys. 
 
 ```sql
@@ -200,15 +204,61 @@ ADD COLUMN order_payment_id INT AUTO_INCREMENT PRIMARY KEY
 ```
 
 
-- Referential integrity: to ensure connection between the tables in the database – FK constraints
+- Referential integrity: to ensure connection between the tables in the database – Foreign key constraints
 
+```sql
+-- Foreign key constraints for the order_items table
+
+ALTER TABLE order_items
+-- On deletion of an order_id from the orders table, the record in the order_items table is removed as well.
+ADD CONSTRAINT order_id_fk FOREIGN KEY(order_id) 
+	REFERENCES orders(order_id) 
+    ON DELETE CASCADE,
+
+/* When a product is deleted, it sets the product_id value in the order_items table to null, 
+if however the product_id has been updated, it updates the product_id in the order_items table
+*/
+
+ADD CONSTRAINT product_id_fk FOREIGN KEY(product_id) 
+	REFERENCES products(product_id) 
+	ON DELETE SET NULL
+    ON UPDATE CASCADE,
+
+/* When a sellers info is deleted, it sets the seller's value in the order_items table to null, 
+if however the seller_id has been updated, it updates the seller_id in the order_items table
+*/
+
+ADD CONSTRAINT seller_id_fk FOREIGN KEY(seller_id) 
+	REFERENCES sellers(seller_id) 
+	ON DELETE SET NULL
+    ON UPDATE CASCADE;
+
+
+```
+The full scripts for the foreign key constraints can be found here.
 
 
 - Domain integrity: to enforce a set of rules i.e acceptable values or range of what we’re storing in a database – data type rules
+For most tables I enforced domain integrity on creation of the tables. For some tables, these were enforced during modification of the tables.
 
+```sql
+-- This alters the orders table and modifies the data type for each column
+ALTER TABLE orders
+MODIFY COLUMN order_id VARCHAR(50) NOT NULL PRIMARY KEY,
+MODIFY COLUMN customer_id VARCHAR(50) NOT NULL,
+MODIFY COLUMN order_status VARCHAR(20) NOT NULL,
+MODIFY COLUMN order_purchase_timestamp TIMESTAMP NOT NULL,
+MODIFY COLUMN order_approved_at DATETIME,
+MODIFY COLUMN order_delivered_carrier_date DATETIME,
+MODIFY COLUMN order_delivered_customer_date DATETIME,
+MODIFY COLUMN order_estimated_delivery_date DATETIME NOT NULL;
 
+```
 
 At this point, I also drew a sketch of what the final database is supposed to look like to view the relationship between tables
+
+# Creating views
+
 
 
 
