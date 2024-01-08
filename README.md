@@ -45,7 +45,8 @@ I conducted a comprehensive analysis of the company's background, posed insightf
   - [Data normalization]()
   - [Table constraints]()
 - [Creating views]()
-- [Automating database activity – triggers and stored procedures]()
+- [Automating database activity]
+  - [Triggers and stored procedures]()
 - [Assign user roles and Privileges]()
 - [Query optimization and scalability strategies]()
 - [Backup and recovery]()
@@ -258,7 +259,45 @@ MODIFY COLUMN order_estimated_delivery_date DATETIME NOT NULL;
 At this point, I also drew a sketch of what the final database is supposed to look like to view the relationship between tables
 
 # Creating views
+At this point the database for Olist stores have been setup, populated and functional. Olist store manager has made the following requests:
+- Order history view
+- Product summary view
+- Yearly and monthly sales trend 
 
+The views requeted above are intended to created a unified view to make analysis and reporting easier.
+Database views are virtual tables that don't store data themselves but provide a customized way to look at data from one or more underlying base tables.
+
+```sql
+/* A. Order history view
+
+Olist store sales team would like to easily access and view the history of all orders in the store. They would like
+to see all orders placed, what customers placed them, the quanity of goods ordered, the status of the order as 
+well as the total payment for that order.
+*/
+
+CREATE VIEW order_history AS
+SELECT  c.customer_id,
+		o.order_id,
+        o.order_purchase_timestamp,
+        o.order_status,
+        COUNT(order_item_id) AS order_quantity,
+        SUM(oi.price + oi.freight_value) AS total_amount
+FROM orders AS o
+LEFT JOIN customers AS c
+	ON o.customer_id = c.customer_id
+LEFT JOIN order_items AS oi
+	ON o.order_id = oi.order_id
+GROUP BY o.order_id;
+
+```
+
+The full sql scripts can be found here.
+
+# Automating database activity
+## Triggers
+
+
+## Stored procedures
 
 
 
