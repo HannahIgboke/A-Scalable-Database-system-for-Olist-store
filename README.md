@@ -49,11 +49,48 @@ I conducted a comprehensive analysis of the company's background, posed insightf
 -	[Database security]()
 -	[Database documentation and dictionary]()
 
-**Tool used**:** The Olist store database system is built on MySQL RDBMS.
+**Tool used**: The Olist store database system is built on MySQL RDBMS.
 
 # Database setup and creation
 
 To setup the database I considered the following:
 
--	What Character encoding to use? It is a method used to represent characters(letters, digits, symbols) as binary numbers read about it here – I used utf8mb4 a chacrater encoding type that accommodates a diverse character especially in a case like this for a Brazillian department store.
--	What Scalability strategies to implement?  See more about the strategies I implemented here.
+-	What Character encoding to use? It is a method used to represent characters(letters, digits, symbols) as binary numbers read about it [here](https://www.motionpoint.com/blog/the-importance-of-character-encoding-website-translation-user-experience/) – I used utf8mb4 a chacrater encoding type that accommodates a diverse character especially in a case like this for a Brazillian department store.
+-	What Scalability strategies can be implemented?
+
+After this considerations, I proceeded to create and setup my database
+
+```sql
+-- Drops database if it exists
+DROP DATABASE IF EXISTS olist_stores;
+
+-- Creating the database using character encoding of utf-8
+CREATE DATABASE olist_stores DEFAULT CHARACTER SET utf8mb4;
+
+-- To check if the database was created
+SHOW DATABASES;
+
+-- to make the olist_stores the active database
+USE olist_stores;
+```
+
+# Data migration, table constraints and creating EER diagram
+
+## Data migration
+
+At this stage, the database to hold the business data has been created and the next step is to migrate data from the excel files provided into the database schema. While migrating the data I kept the following in mind:
+-	What tables are present and how do they connect to each other?
+-	What primary keys, foreign keys, constraints, data validation and integrity can be enforced.
+
+Data migration can be achieved in two different ways:
+- Using the Table Import wizard on MySQL Workbench to import the data
+- Using LOAD DATA INFILE on MySQL Shell to load the data into a table
+
+# Table constraints
+
+
+I used the second method as it is efficient to load large data(in excel/csv files) into databases in record time. I also used the data import wizard to import one of the files in json format.
+
+
+
+
