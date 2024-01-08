@@ -52,7 +52,6 @@ I conducted a comprehensive analysis of the company's background, posed insightf
 - [Query optimization and scalability strategies](https://github.com/HannahIgboke/A-Scalable-Database-system-for-Olist-store/tree/main#query-optimization-and-scalability-strategies)
 - [Backup and recovery]()
 - [Database security]()
-- [Database documentation and dictionary]()
 
 **Tool used**: The Olist store database system is built on MySQL RDBMS.
 
@@ -472,11 +471,14 @@ Other scalability strategies that can be implemented in the Olist stores databas
 
 # Backup and recovery
 
+Backing up a database is like having an insurance policy for your most valuable asset: your data. For the olist store database it was important to backup database information because if the database files got corrupted, accidentally deleted, or encrypted by ransomware Olist store would lose years of critical information, potentially crippling the business. A recent backup acts as a lifeline, allowing you to restore the database to a previous point in time and minimize data loss.
+
+I performed a backup using the Data Export option in MySQL Workbench. This was exported to a dump project folder on my device.
+
 
 # Database security
 
 
-# Database documentation and dictionary
 
 
 
