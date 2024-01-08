@@ -17,7 +17,7 @@
 
 Olist, one of the largest department stores in Brazilian marketplaces connects small businesses from all over Brazil to channels without hassle and with a single contract. Those merchants are able to sell their products through the Olist Store and ship them directly to the customers using Olist logistics partners. Currently, Olist has information of 100,000 orders from 2016 to 2018 made at multiple marketplaces in Brazil stored in several excel files.
 
-With recent information during the board meeting, Olist store manager has been informed of the projected triple in sales and data volume in the coming years and the need to build a more robust system for data collection, retrieval and organization to monitor business performance.
+With recent information from the board meeting, the Olist store manager has been informed of the projected triple in sales and data volume in the coming years and the need to build a more robust system for data collection, retrieval, and organization to monitor business performance.
 
 # Project overview
 
@@ -45,7 +45,7 @@ I conducted a comprehensive analysis of the company's background, posed insightf
   - [Data normalization]()
   - [Table constraints]()
 - [Creating views]()
-- [Automating/Monitoring database activity]
+- [Automating/Monitoring database activity]()
   - [Triggers]()
   - [Stored procedures]()
 - [Assign user roles and Privileges]()
