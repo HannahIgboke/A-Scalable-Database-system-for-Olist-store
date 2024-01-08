@@ -129,7 +129,7 @@ I also observed that the tables below contained redundant data that could cause 
     <img width="800" src="https://github.com/HannahIgboke/A-Scalable-Database-system-for-Olist-store/blob/main/Building%20a%20scalable%20Database%20system%20for%20Olist%20store/Images/order_payments.PNG" alt="order_payments">
 </p>
 
-The payments_type column contains values that upon any sort of modification - deletion or update would cause errors. To rectify this, I used the SQL script below to create a table: payment_type containing information solely about the types of payment available on the olist store platform
+The payments_type column contains values that upon any sort of modification - deletion or update would cause errors. To rectify this, I used the SQL script below to create a table: payment_type containing information solely about the types of payment available on the olist store platform.
 
 ```sql
 
@@ -157,9 +157,26 @@ RENAME TABLE payment_kind TO payment_type;
 
 ```
 
+The reviewed tables are as follows
+
 order_payments                                                                                                   |payment_type                     
 -----------------------------------------------------------------------------------------------------------------|---------------------------
 ![order_payments](Building%20a%20scalable%20Database%20system%20for%20Olist%20store/Images/order_payments2.PNG)  |![payment_type](Building%20a%20scalable%20Database%20system%20for%20Olist%20store/Images/payment_type.PNG)    
+
+
+- products
+
+The same concept as the above applies here
+
+<p align="center">
+    <img width="800" src="https://github.com/HannahIgboke/A-Scalable-Database-system-for-Olist-store/blob/main/Building%20a%20scalable%20Database%20system%20for%20Olist%20store/Images/products.PNG" alt="products">
+</p>
+
+The reviewed are seen below
+
+products                                                                                                   |product_category_translation                    
+-----------------------------------------------------------------------------------------------------------|---------------------------
+![products](Building%20a%20scalable%20Database%20system%20for%20Olist%20store/Images/products2.PNG)  |![product_category_translation](Building%20a%20scalable%20Database%20system%20for%20Olist%20store/Images/product_category_translation.PNG)    
 
 
 
