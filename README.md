@@ -452,8 +452,11 @@ SELECT DISTINCT TABLE_NAME,
 FROM INFORMATION_SCHEMA.STATISTICS
 WHERE TABLE_SCHEMA = 'olist_stores';
 ```
+Scalability for the olist store database is crucial for handling growing data and user loads in a database system. I implemented database indexing ensuring that appropriate indexes are in place on columns frequently used in queries. Well-designed indexes can significantly improve query performance, especially for large datasets.
+Other scalability strategies that can be implemented in the Olist stores database:
 
-
+- Vertical Scaling: Upgrade the hardware resources of the database server, such as increasing CPU, RAM, or storage capacity to provide immediate performance improvements.
+- Horizontal Scaling: Distribute the database workload across multiple servers by using horizontal scaling (sharding). Split the data into partitions and distribute these partitions across different database servers. This helps distribute the load and improves overall performance.
 
 # Backup and recovery
 
