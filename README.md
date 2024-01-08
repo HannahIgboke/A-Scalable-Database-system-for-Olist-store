@@ -35,6 +35,17 @@ Olist stores have the following data in excel files:
 -	Sellers information
 -	Product category name translation
 
+## Project breakdown
 
+I conducted a comprehensive analysis of the company's background, posed insightful questions about its processes and methods, and carefully reviewed the project aims and objectives. From the information gathered, I have delineated the project into the following stages to guarantee the achievement of all project objectives:
 
+- Database setup and creation
+-	Data migration, table constraints and creating EER diagram
+-	Creating views
+-	Automating database activity – triggers and stored procedures
+-	User Management and Privileges
+-	Query optimization and scalability strategies
+-	Backup and recovery
+-	Database security'
+-	Database documentation and dictionary
 
