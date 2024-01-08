@@ -177,11 +177,11 @@ The same concept as the above applies here.
     <img width="800" src="https://github.com/HannahIgboke/A-Scalable-Database-system-for-Olist-store/blob/main/Building%20a%20scalable%20Database%20system%20for%20Olist%20store/Images/products.PNG" alt="products">
 </p>
 
-The reviewed are seen below:
+The reviewed tables are seen below:
 
 products                                                                                                   |product_category_translation                    
 -----------------------------------------------------------------------------------------------------------|---------------------------
-![products](Building%20a%20scalable%20Database%20system%20for%20Olist%20store/Images/products2.PNG)  |![product_category_translation](Building%20a%20scalable%20Database%20system%20for%20Olist%20store/Images/product_category_translation.PNG)    
+![products](Building%20a%20scalable%20Database%20system%20for%20Olist%20store/Images/products2.PNG)  	   |![product_category_translation](Building%20a%20scalable%20Database%20system%20for%20Olist%20store/Images/product_category_translation.PNG)    
 
 
 ## Table constraints
@@ -190,7 +190,7 @@ Table constraints are used to enforce data integrity in a database. This means h
 
 - Entity integrity: to ensure unique entries – table keys.
 
-Some tables in the database contained natural primary keys while others don't. I had to create primary keys for the tables devoid of primary keys. 
+Some tables in the database contained natural primary keys, while others didn't. I had to create primary keys for the tables devoid of it. 
 
 ```sql
 -- For the order_reviews table
@@ -224,7 +224,7 @@ if however the product_id has been updated, it updates the product_id in the ord
 ADD CONSTRAINT product_id_fk FOREIGN KEY(product_id) 
 	REFERENCES products(product_id) 
 	ON DELETE SET NULL
-    ON UPDATE CASCADE,
+    	ON UPDATE CASCADE,
 
 /* When a sellers info is deleted, it sets the seller's value in the order_items table to null, 
 if however the seller_id has been updated, it updates the seller_id in the order_items table
@@ -233,7 +233,7 @@ if however the seller_id has been updated, it updates the seller_id in the order
 ADD CONSTRAINT seller_id_fk FOREIGN KEY(seller_id) 
 	REFERENCES sellers(seller_id) 
 	ON DELETE SET NULL
-    ON UPDATE CASCADE;
+    	ON UPDATE CASCADE;
 
 
 ```
@@ -241,7 +241,7 @@ The full scripts for the foreign key constraints can be found here.
 
 
 - Domain integrity: to enforce a set of rules i.e acceptable values or range of what we’re storing in a database – data type rules
-For most tables I enforced domain integrity on creation of the tables. For some tables, these were enforced during modification of the tables.
+For most tables I enforced domain integrity during table creation. For some tables, these were enforced during modification of the tables.
 
 ```sql
 -- This alters the orders table and modifies the data type for each column
@@ -260,6 +260,7 @@ MODIFY COLUMN order_estimated_delivery_date DATETIME NOT NULL;
 At this point, I also drew a sketch of what the final database is supposed to look like to view the relationship between tables
 
 # Creating views
+
 At this point the database for Olist stores have been setup, populated and functional. Olist store manager has made the following requests:
 - Order history view
 - Product summary view
@@ -295,6 +296,7 @@ GROUP BY o.order_id;
 The full sql scripts can be found here.
 
 # Automating/Monitoring database activity
+
 ## Triggers
 To monitor Olist store database activities I created two triggers:
 - One, to log and audit database activities
@@ -326,7 +328,7 @@ DELIMITER ;
 
 ```
 
-- Another to notify Olist store to when they gain a new matter
+- Another to notify Olist store to when they gain a new customer
 
 
 ```sql
@@ -363,6 +365,7 @@ VALUES ('4aw2a9397am4bc099783511faa1p6830', '090f6d7f674977d08a9b445l5117cqd8', 
 
 
 ## Stored procedures
+
 Stored procedures are precompiled sets of SQL statements stored within the database itself. They are used for repetitive tasks making them reusable across applications. This saves time and effort, promoting code consistency and maintainability.
 
 I created a GetCustomerOrderHistory procedure that allows Olist stores gain an idea into the order history of specific customers. This is especially useful since sales managers frequently view customers order/purchase history. To do this I created a parameterized stored procedure. This can be seen below.
@@ -394,6 +397,7 @@ CALL GetCustomerOrderHistory('8bb3bef4e75a95524235cdc11a7331af');
 ```
 
 # Assign user roles and Privileges
+
 I created three users for the olist store database. A Database administrator, a sales manager and the analystics team. Each user is assigned certain privileges that allows measured access to the database.
 
 ```sql
@@ -425,7 +429,9 @@ SHOW GRANTS FOR "analytics_team"@localhost;
 
 ```
 The admin is granted all privileges which means they have full control over every aspect of that database - data manipulation, definition, control, as well as administrative privileges.
+
 The sales manager privileges includes SELECT, and data manipulation access to the database. Also, they are provided access to the stored procedure created earlier in order to qucikly view customer order history for sales purposes.
+
 The data analytics team is granted SELECT privilege to retrieve data from tables.
 
 # Query optimization and scalability strategies
@@ -452,11 +458,17 @@ SELECT DISTINCT TABLE_NAME,
 FROM INFORMATION_SCHEMA.STATISTICS
 WHERE TABLE_SCHEMA = 'olist_stores';
 ```
-Scalability for the olist store database is crucial for handling growing data and user loads in a database system. I implemented database indexing ensuring that appropriate indexes are in place on columns frequently used in queries. Well-designed indexes can significantly improve query performance, especially for large datasets.
-Other scalability strategies that can be implemented in the Olist stores database:
 
-- Vertical Scaling: Upgrade the hardware resources of the database server, such as increasing CPU, RAM, or storage capacity to provide immediate performance improvements.
-- Horizontal Scaling: Distribute the database workload across multiple servers by using horizontal scaling (sharding). Split the data into partitions and distribute these partitions across different database servers. This helps distribute the load and improves overall performance.
+I paid close attention to the indexes I created to avoid creating a lot of it. Creating many indexes could;
+
+- Lead to slower write operations because every time data is inserted, updated or deleted, the database must also modify all relevant indexes to keep them in sync.
+- Increase disk usage as indexes consume disk space especially for larger databases.
+
+Scalability for the olist store database is crucial for handling growing data and user loads in a database system. I implemented database indexing ensuring that appropriate indexes are in place on columns frequently used in queries. Well-designed indexes can significantly improve query performance, especially for large datasets.
+Other scalability strategies that can be implemented in the Olist stores database are:
+
+- Vertical Scaling: Upgrading the hardware resources of the database server, such as increasing CPU, RAM, or storage capacity to provide immediate performance improvements.
+- Horizontal Scaling: Distributing the database workload across multiple servers by using horizontal scaling (sharding). The data is splitted into partitions and distributed across different database servers. This helps distribute the load and improves overall performance.
 
 # Backup and recovery
 
