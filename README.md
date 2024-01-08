@@ -40,14 +40,14 @@ Olist stores have the following data in excel files:
 I conducted a comprehensive analysis of the company's background, posed insightful questions about its processes and methods, and carefully reviewed the project aims and objectives. From the information gathered, I have delineated the project into the following stages to guarantee the achievement of all project objectives:
 
 - [Database setup and creation]()
--	[Data migration, table constraints and creating EER diagram]()
--	[Creating views]()
--	[Automating database activity – triggers and stored procedures]()
--	[Assign user roles and Privileges]()
--	[Query optimization and scalability strategies]()
--	[Backup and recovery]()
--	[Database security]()
--	[Database documentation and dictionary]()
+- [Data migration, table constraints and creating EER diagram]()
+- [Creating views]()
+- [Automating database activity – triggers and stored procedures]()
+- [Assign user roles and Privileges]()
+- [Query optimization and scalability strategies]()
+- [Backup and recovery]()
+- [Database security]()
+- [Database documentation and dictionary]()
 
 **Tool used**: The Olist store database system is built on MySQL RDBMS.
 
@@ -179,14 +179,34 @@ products                                                                        
 ![products](Building%20a%20scalable%20Database%20system%20for%20Olist%20store/Images/products2.PNG)  |![product_category_translation](Building%20a%20scalable%20Database%20system%20for%20Olist%20store/Images/product_category_translation.PNG)    
 
 
-
 ## Table constraints
 
 Table constraints are used to enforce data integrity in a database. This means having correct data as a result of certain database rules. For the olist store database it meant ensuring there are no broken relationships between the tables in the Database, incorrect values and presence of duplicates. Data integrity is divided into:
 
--	Entity integrity: to ensure unique entries – table keys
--	Referential integrity: to ensure connection between the tables in the database – FK constraints
--	Domain integrity: to enforce a set of rules i.e acceptable values or range of what we’re storing in a database – data type rules
+- Entity integrity: to ensure unique entries – table keys
+Some tables in the database contained natural primary keys while others don't. I had to create primary keys for the tables devoid of primary keys. 
+
+```sql
+-- For the order_reviews table
+
+ALTER TABLE order_reviews
+ADD COLUMN review_id INT AUTO_INCREMENT PRIMARY KEY;
+
+-- For the order_payments
+
+ALTER TABLE order_payments
+ADD COLUMN order_payment_id INT AUTO_INCREMENT PRIMARY KEY
+
+```
+
+
+- Referential integrity: to ensure connection between the tables in the database – FK constraints
+
+
+
+- Domain integrity: to enforce a set of rules i.e acceptable values or range of what we’re storing in a database – data type rules
+
+
 
 At this point, I also drew a sketch of what the final database is supposed to look like to view the relationship between tables
 
