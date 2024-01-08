@@ -39,13 +39,21 @@ Olist stores have the following data in excel files:
 
 I conducted a comprehensive analysis of the company's background, posed insightful questions about its processes and methods, and carefully reviewed the project aims and objectives. From the information gathered, I have delineated the project into the following stages to guarantee the achievement of all project objectives:
 
-- Database setup and creation
--	Data migration, table constraints and creating EER diagram
--	Creating views
--	Automating database activity – triggers and stored procedures
--	User Management and Privileges
--	Query optimization and scalability strategies
--	Backup and recovery
--	Database security'
--	Database documentation and dictionary
+- [Database setup and creation]()
+-	[Data migration, table constraints and creating EER diagram]()
+-	[Creating views]()
+-	[Automating database activity – triggers and stored procedures]()
+-	[Assign user roles and Privileges]()
+-	[Query optimization and scalability strategies]()
+-	[Backup and recovery]()
+-	[Database security]()
+-	[Database documentation and dictionary]()
 
+**Tool used**:** The Olist store database system is built on MySQL RDBMS.
+
+# Database setup and creation
+
+To setup the database I considered the following:
+
+-	What Character encoding to use? It is a method used to represent characters(letters, digits, symbols) as binary numbers read about it here – I used utf8mb4 a chacrater encoding type that accommodates a diverse character especially in a case like this for a Brazillian department store.
+-	What Scalability strategies to implement?  See more about the strategies I implemented here.
