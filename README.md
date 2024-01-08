@@ -60,7 +60,7 @@ I conducted a comprehensive analysis of the company's background, posed insightf
 
 To setup the database I considered the following:
 
--	What Character encoding to use? It is a method used to represent characters(letters, digits, symbols) as binary numbers read about it [here](https://www.motionpoint.com/blog/the-importance-of-character-encoding-website-translation-user-experience/) – I used utf8mb4 a chacrater encoding type that accommodates a diverse character especially in a case like this for a Brazillian department store.
+-	What Character encoding to use? It is a method used to represent characters(letters, digits, symbols) as binary numbers. Read about it [here](https://www.motionpoint.com/blog/the-importance-of-character-encoding-website-translation-user-experience/). I used utf8mb4 a chacrater encoding type that accommodates a diverse character especially in a case like this for a Brazillian department store.
 -	What Scalability strategies can be implemented?
 
 After this considerations, I proceeded to create and setup my database
@@ -81,15 +81,15 @@ USE olist_stores;
 
 # Data migration
 
-At this stage, the database to hold the business data has been created and the next step is to create the tables that would hold the data. Next step is to migrate data from the excel files provided into the database schema. While migrating the data I kept the following in mind:
+At this stage, the database to hold the business data has been created. I created tables that would hold the data. Next, I migrated data from the excel files provided into the database schema. While migrating the data I kept the following in mind:
 -	What tables are present and how do they connect to each other?
 -	What primary keys, foreign keys, constraints, data validation and integrity can be enforced.
 
-Data migration can be achieved in two different ways:
+Data migration can be achieved in two ways:
 - Using the Table Import wizard on MySQL Workbench to import the data
 - Using LOAD DATA INFILE on MySQL Shell to load the data into a table
 
-I used the second method as it is efficient to load large data(in excel/csv files) into databases in record time. I also used the data import wizard to import one of the files in json format. The script below contains the SQL scripts used to import the customers information into a table in the olist stores database. The full scripts can be found in my SQL file.
+I used the second method as it is efficient to load large data(in excel/csv files) into databases in record time. I also used the data import wizard to import one of the files in json format. The script below contains the SQL codes used to import the customers information into a table in the olist stores database. The full scripts can be found in my SQL file.
 
 ```sql
 -- Specifies and activates the required database
@@ -121,11 +121,11 @@ IGNORE 1 ROWS; -- instructs mysql to ignore the first row of the csv file since 
 
 ## Data normalization
 
-After importing the tables into the database, I observed that some table data were denormalized. Data normalization is used to eliminate redundant data, minimise data modification errors, and simplify the query process. I followed the three step normalization method to go through the database plan and address whatsoever may cause data integrity issues. They are as follows:
+After importing the tables into the database, I observed that some table data were denormalized. Data normalization is used to eliminate redundant data, minimise data modification errors, and simplify the query process. I followed a three step normalization method to go through the database plan and address whatsoever may cause data integrity issues. They are as follows:
 
 - First Normal form (1NF): this deals with data atomicity, i.e ensuring that each field contains one type of information. All tables imported passed this check.
 - Second Normal Form (2NF): handles partial dependency where one column only depends on part of the primary key (commonly present in tables with composite/compound keys). The tables scaled through this step.
-- Third Normal form: this tackles transitive dependency where a column depends on a column which depends on the primary key. 
+- Third Normal form(3NF): this tackles transitive dependency where a column depends on a column which depends on the primary key.  
 
 I also observed that the tables below contained redundant data that could cause data modification errors:
 - order_payments
@@ -134,7 +134,7 @@ I also observed that the tables below contained redundant data that could cause 
     <img width="800" src="https://github.com/HannahIgboke/A-Scalable-Database-system-for-Olist-store/blob/main/Building%20a%20scalable%20Database%20system%20for%20Olist%20store/Images/order_payments.PNG" alt="order_payments">
 </p>
 
-The payments_type column contains values that upon any sort of modification - deletion or update would cause errors. To rectify this, I used the SQL script below to create a table: payment_type containing information solely about the types of payment available on the olist store platform.
+The payments_type column contains values that upon any sort of modification - deletion or update would cause errors. To rectify this, I used the SQL script below to create a table: payment_type containing information solely about the types of payment available on the olist store platform. With this, whenever the data is updated, or deleted, the information can cascade neatly without errors.
 
 ```sql
 
@@ -162,7 +162,7 @@ RENAME TABLE payment_kind TO payment_type;
 
 ```
 
-The reviewed tables are as follows
+The reviewed tables are as follows:
 
 order_payments                                                                                                   |payment_type                     
 -----------------------------------------------------------------------------------------------------------------|---------------------------
@@ -171,13 +171,13 @@ order_payments                                                                  
 
 - products
 
-The same concept as the above applies here
+The same concept as the above applies here.
 
 <p align="center">
     <img width="800" src="https://github.com/HannahIgboke/A-Scalable-Database-system-for-Olist-store/blob/main/Building%20a%20scalable%20Database%20system%20for%20Olist%20store/Images/products.PNG" alt="products">
 </p>
 
-The reviewed are seen below
+The reviewed are seen below:
 
 products                                                                                                   |product_category_translation                    
 -----------------------------------------------------------------------------------------------------------|---------------------------
@@ -189,7 +189,7 @@ products                                                                        
 Table constraints are used to enforce data integrity in a database. This means having correct data as a result of certain database rules. For the olist store database it meant ensuring there are no broken relationships between the tables in the Database, incorrect values and presence of duplicates. Data integrity is divided into:
 
 - Entity integrity: to ensure unique entries – table keys.
-- 
+
 Some tables in the database contained natural primary keys while others don't. I had to create primary keys for the tables devoid of primary keys. 
 
 ```sql
