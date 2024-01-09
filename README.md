@@ -50,8 +50,8 @@ I conducted a comprehensive analysis of the company's background, posed insightf
   - [Stored procedures](https://github.com/HannahIgboke/A-Scalable-Database-system-for-Olist-store/tree/main#stored-procedures)
 - [Assign user roles and Privileges](https://github.com/HannahIgboke/A-Scalable-Database-system-for-Olist-store/tree/main#assign-user-roles-and-privileges)
 - [Query optimization and scalability strategies](https://github.com/HannahIgboke/A-Scalable-Database-system-for-Olist-store/tree/main#query-optimization-and-scalability-strategies)
-- [Backup and recovery]()
-- [Database security]()
+- [Backup and recovery](https://github.com/HannahIgboke/A-Scalable-Database-system-for-Olist-store/blob/main/README.md#backup-and-recovery)
+- [Database security](https://github.com/HannahIgboke/A-Scalable-Database-system-for-Olist-store/blob/main/README.md#database-security)
 
 **Tool used**: The Olist store database system is built on MySQL RDBMS.
 
