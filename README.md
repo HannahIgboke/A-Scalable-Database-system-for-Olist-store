@@ -447,7 +447,7 @@ The data analytics team is granted SELECT privilege to retrieve data from tables
 
 Indexes are used to optimize the query of the olist_stores database. The indexes created are as a result of an understanding of the database structure of olist stores, that is, the indexes are created on columns of tables in a DB that are commonly used to perform JOIN and WHERE operations. The choice of columns to index is flexible and can evolve over time based on the usage patterns of the database with time.
 
-Naturally indexes are created on columns when you define primary and secondary keys.
+Naturally indexes are created on columns when you define primary and foreign keys.
 
 ```sql
 -- To view all the present indexes in the database
@@ -488,7 +488,7 @@ I performed a backup using the Data Export option in MySQL Workbench. This was e
 
 # Database security
 
-Database security is a critical aspect of managing any database, and Olist stores, being an e-commerce platform dealing with sensitive customer and business data, requires robust security measures. Rhe following are steps/methods I took to ensure database security for the olist store database:
+Database security is a critical aspect of managing any database, and Olist stores, being an e-commerce platform dealing with sensitive customer and business data, requires robust security measures. The following are steps/methods I took to ensure database security for the olist store database:
 - Access Control and Authentication: using role-based access control (RBAC) to grant specific privileges to different user roles based on their responsibilities.
 - Database Auditing: this was achieved through triggers to provide an audit trail to track and log all user activities and security-relevant events.
 - Parameterized Queries and Prepared Statements: using parameterized queries and prepared statements in application code to prevent SQL injection attacks. This helps sanitize user input and avoids the execution of malicious SQL queries.
