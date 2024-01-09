@@ -265,7 +265,7 @@ The database for Olist stores have been setup, populated and functional. Olist s
 - Product summary view
 - Yearly and monthly sales trend 
 
-The views requeted above are intended to created a unified view to make analysis and reporting easier.
+The views requested above are intended to created a unified view to make analysis and reporting easier.
 Database views are virtual tables that don't store data themselves but provide a customized way to look at data from one or more underlying base tables.
 
 ```sql
