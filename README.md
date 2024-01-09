@@ -236,8 +236,6 @@ ADD CONSTRAINT seller_id_fk FOREIGN KEY(seller_id)
 
 
 ```
-The full scripts for the foreign key constraints can be found here.
-
 
 - Domain integrity: to enforce a set of rules i.e acceptable values or range of what we’re storing in a database – data type rules
 For most tables I enforced domain integrity during table creation. For some tables, these were enforced during modification of the tables.
@@ -256,11 +254,13 @@ MODIFY COLUMN order_estimated_delivery_date DATETIME NOT NULL;
 
 ```
 
-At this point, I also drew a sketch of what the final database is supposed to look like to view the relationship between tables
+The full scripts for all table alterations can be found [here](https://github.com/HannahIgboke/A-Scalable-Database-system-for-Olist-store/blob/main/Building%20a%20scalable%20Database%20system%20for%20Olist%20store/SQL%20scripts/Table%20alterations.sql).
+
+At this point, I also drew a sketch of what the final database is supposed to look like to view the relationship between tables.
 
 # Creating views & ER Diagram
 
-At this point the database for Olist stores have been setup, populated and functional. Olist store manager has made the following requests:
+The database for Olist stores have been setup, populated and functional. Olist store manager has made the following requests:
 - Order history view
 - Product summary view
 - Yearly and monthly sales trend 
@@ -292,7 +292,7 @@ GROUP BY o.order_id;
 
 ```
 
-The full sql scripts can be found here.
+For more details on the script for the views, find it [here](https://github.com/HannahIgboke/A-Scalable-Database-system-for-Olist-store/blob/main/Building%20a%20scalable%20Database%20system%20for%20Olist%20store/SQL%20scripts/Database%20views.sql).
 
 An Entity-Relationship (ER) diagram is a visual representation of the entities (objects or concepts) within a system or application and the relationships between them. Below is the entity relationship diagram that represents the entities, attributes, cardinality, and keys of tables in the olist store database
 
@@ -334,6 +334,8 @@ DELIMITER ;
 
 ```
 
+The rest of the script is [here](https://github.com/HannahIgboke/A-Scalable-Database-system-for-Olist-store/blob/main/Building%20a%20scalable%20Database%20system%20for%20Olist%20store/SQL%20scripts/Database%20triggers.sql)
+
 - Another to notify Olist store to when they gain a new customer
 
 
@@ -368,6 +370,7 @@ INSERT INTO customers (customer_id, customer_unique_id, customer_zip_code_prefix
 VALUES ('4aw2a9397am4bc099783511faa1p6830', '090f6d7f674977d08a9b445l5117cqd8', 2394);
 -- It worked!
 ```
+
 
 
 ## Stored procedures
