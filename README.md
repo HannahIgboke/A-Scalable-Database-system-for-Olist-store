@@ -88,7 +88,7 @@ Data migration can be achieved in two ways:
 - Using the Table Import wizard on MySQL Workbench to import the data
 - Using LOAD DATA INFILE on MySQL Shell to load the data into a table
 
-I used the second method as it is efficient to load large data(in excel/csv files) into databases in record time. I also used the data import wizard to import one of the files in json format. The script below contains the SQL codes used to import the customers information into a table in the olist stores database. The full scripts can be found in my SQL file.
+I used the second method as it is efficient to load large data(in excel/csv files) into databases in record time. I also used the data import wizard to import one of the files in json format. The script below contains the SQL codes used to import the customers information into a table in the olist stores database. The full scripts can be found in my [SQL file](https://github.com/HannahIgboke/A-Scalable-Database-system-for-Olist-store/blob/main/Building%20a%20scalable%20Database%20system%20for%20Olist%20store/SQL%20scripts/Database%20migration.sql).
 
 ```sql
 -- Specifies and activates the required database
