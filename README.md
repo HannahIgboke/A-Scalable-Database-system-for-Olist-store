@@ -478,7 +478,8 @@ I performed a backup using the Data Export option in MySQL Workbench. This was e
 
 # Database security
 
-
-
-
-
+Database security is a critical aspect of managing any database, and Olist stores, being an e-commerce platform dealing with sensitive customer and business data, requires robust security measures. Rhe following are steps/methods I took to ensure database security for the olist store database:
+- Access Control and Authentication: using role-based access control (RBAC) to grant specific privileges to different user roles based on their responsibilities.
+- Database Auditing: this was achieved through triggers to provide an audit trail to track and log all user activities and security-relevant events.
+- Parameterized Queries and Prepared Statements: using parameterized queries and prepared statements in application code to prevent SQL injection attacks. This helps sanitize user input and avoids the execution of malicious SQL queries.
+- Backup and Recovery:Regularly back up the database and ensure that backups are securely stored. Test the restoration process to verify that backups are reliable and can be used for recovery in case of data loss or security incidents.
