@@ -294,7 +294,7 @@ GROUP BY o.order_id;
 
 For more details on the script for the views, find it [here](https://github.com/HannahIgboke/A-Scalable-Database-system-for-Olist-store/blob/main/Building%20a%20scalable%20Database%20system%20for%20Olist%20store/SQL%20scripts/Database%20views.sql).
 
-An Entity-Relationship (ER) diagram is a visual representation of the entities (objects or concepts) within a system or application and the relationships between them. Below is the entity relationship diagram that represents the entities, attributes, cardinality, and keys of tables in the olist store database
+An Entity-Relationship (ER) diagram is a visual representation of the entities (objects or concepts) within a system or application and the relationships between them. Below is the entity relationship diagram that represents the entities, attributes, cardinality, and keys of tables in the olist store database. It was created using the Reverse Engineer feature in MySQL Workbench.
 
 <p align="center">
     <img width="1000" src="https://github.com/HannahIgboke/A-Scalable-Database-system-for-Olist-store/blob/main/Building%20a%20scalable%20Database%20system%20for%20Olist%20store/Images/Entity%20Relationship%20Diagram.jpg" alt="ERD">
