@@ -258,7 +258,7 @@ MODIFY COLUMN order_estimated_delivery_date DATETIME NOT NULL;
 
 At this point, I also drew a sketch of what the final database is supposed to look like to view the relationship between tables
 
-# Creating views
+# Creating views & ER Diagram
 
 At this point the database for Olist stores have been setup, populated and functional. Olist store manager has made the following requests:
 - Order history view
@@ -293,6 +293,13 @@ GROUP BY o.order_id;
 ```
 
 The full sql scripts can be found here.
+
+An Entity-Relationship (ER) diagram is a visual representation of the entities (objects or concepts) within a system or application and the relationships between them. Below is the entity relationship diagram that represents the entities, attributes, cardinality, and keys of tables in the olist store database
+
+<p align="center">
+    <img width="1000" src="https://github.com/HannahIgboke/A-Scalable-Database-system-for-Olist-store/blob/main/Building%20a%20scalable%20Database%20system%20for%20Olist%20store/Images/Entity%20Relationship%20Diagram.jpg" alt="ERD">
+</p>
+
 
 # Automating/Monitoring database activity
 
