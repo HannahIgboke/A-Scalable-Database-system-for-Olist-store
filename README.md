@@ -407,7 +407,7 @@ CALL GetCustomerOrderHistory('8bb3bef4e75a95524235cdc11a7331af');
 
 # Assign user roles and Privileges
 
-I created three users for the olist store database. A Database administrator, a sales manager and the analystics team. Each user is assigned certain privileges that allows measured access to the database.
+I created three users for the olist store database. A Database administrator, a sales manager and the analytics team. Each user is assigned certain privileges that allows measured access to the database.
 
 ```sql
 -- Creating user roles and privileges
@@ -439,7 +439,7 @@ SHOW GRANTS FOR "analytics_team"@localhost;
 ```
 The admin is granted all privileges which means they have full control over every aspect of that database - data manipulation, definition, control, as well as administrative privileges.
 
-The sales manager privileges includes SELECT, and data manipulation access to the database. Also, they are provided access to the stored procedure created earlier in order to qucikly view customer order history for sales purposes.
+The sales manager privileges includes SELECT, and data manipulation access to the database. Also, they are provided access to the stored procedure created earlier in order to quickly view customer order history for sales purposes.
 
 The data analytics team is granted SELECT privilege to retrieve data from tables.
 
