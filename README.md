@@ -44,7 +44,7 @@ I conducted a comprehensive analysis of the company's background, posed insightf
 - [Table alterations](https://github.com/HannahIgboke/A-Scalable-Database-system-for-Olist-store/tree/main#table-alterations)
   - [Data normalization](https://github.com/HannahIgboke/A-Scalable-Database-system-for-Olist-store/tree/main#data-normalization)
   - [Table constraints](https://github.com/HannahIgboke/A-Scalable-Database-system-for-Olist-store/tree/main#table-constraints)
-- [Creating views](https://github.com/HannahIgboke/A-Scalable-Database-system-for-Olist-store/tree/main#creating-views)
+- [Creating views & ER Diagram](https://github.com/HannahIgboke/A-Scalable-Database-system-for-Olist-store/tree/main#creating-views--er-diagram)
 - [Automating/Monitoring database activity](https://github.com/HannahIgboke/A-Scalable-Database-system-for-Olist-store/tree/main#automatingmonitoring-database-activity)
   - [Triggers](https://github.com/HannahIgboke/A-Scalable-Database-system-for-Olist-store/tree/main#triggers)
   - [Stored procedures](https://github.com/HannahIgboke/A-Scalable-Database-system-for-Olist-store/tree/main#stored-procedures)
