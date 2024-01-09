@@ -21,6 +21,8 @@ LEFT JOIN order_items AS oi
 	ON o.order_id = oi.order_id
 GROUP BY o.order_id;
 
+----------------------------------------------------------------------------------------------------------------------------------------
+
 /* B. Product summary view
 
 Olist strores would like to see how many products per category, the quantity of orders for each category and the total amount 
@@ -47,6 +49,8 @@ INNER JOIN cte AS c
 	ON p.product_id = c.product_id
 GROUP BY p.cat_name_trans_id
 ORDER BY cat_name_trans_id;
+
+----------------------------------------------------------------------------------------------------------------------------------------
 
 /* C. Yearly and monthly sales trend 
 
