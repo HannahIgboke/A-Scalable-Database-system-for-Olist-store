@@ -21,7 +21,7 @@ With recent information from the board meeting, the Olist store manager has been
 
 # Project overview
 
-The aim of this project is to develop(design and build) a comprehensive and scalable database system for Olist store to handle potential increase in data volume and allow for more efficient data collection, retrieval and organization.
+The aim of this project is to develop, design, and build a comprehensive and scalable database system for Olist Store to handle potential increases in data volume and allow for more efficient data collection, retrieval, and organization.
 
 ## Features
 
@@ -59,7 +59,7 @@ I conducted a comprehensive analysis of the company's background, posed insightf
 
 To setup the database I considered the following:
 
--	What Character encoding to use? It is a method used to represent characters(letters, digits, symbols) as binary numbers. Read about it [here](https://www.motionpoint.com/blog/the-importance-of-character-encoding-website-translation-user-experience/). I used utf8mb4 a chacrater encoding type that accommodates a diverse character especially in a case like this for a Brazillian department store.
+-	What Character encoding to use? It is a method used to represent characters(letters, digits, symbols) as binary numbers. Read about it [here](https://www.motionpoint.com/blog/the-importance-of-character-encoding-website-translation-user-experience/). I used utf8mb4 a chacrater encoding type that accommodates a diverse character especially in a case like this for a Brazilian department store.
 -	What Scalability strategies can be implemented?
 
 After this considerations, I proceeded to create and setup my database
